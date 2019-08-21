@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.utilities.Person" table="users">
+	  <id name="id" type="int" column="eid">
+	   <generator class="assigned"/>
+	  </id>
+	<discriminator column="user_type" type="string"></discriminator>
+	<property name="approval">
+		 <column name="approval" />
+	  </property>
+	  <property name="fname">
+		 <column name="fisrt_name" />
+	  </property>
+	  <property name="lname">
+		<column name="last_name"/>
+	  </property>
+	  <property name="uemail">
+		<column name="email"/>
+	  </property>	
+	    <property name="upass">
+		<column name="password"/>
+	  </property>	
+	   <property name="umobile">
+		<column name="mobile"/>
+	  </property>	
+	
+	  
+	  
+	  <subclass name="com.utilities.Student" discriminator-value="student">
+	  	
+
+	  <property name="university" >
+	  <column name="university"/>
+	  </property>
+	  <list name="exams" cascade="all">
+			<key column="student_id"></key>
+			<index column="idx"></index>
+			<many-to-many class="com.utilities.Exams"/>
+		</list>
+	  
+	  </subclass> 
+	  
+	  <subclass name="com.utilities.Examiner" discriminator-value="examiner">
+	  <property name="organisation" >
+	  <column name="organisation"/>
+	  </property>
+	  <list name="exams" cascade="all">
+			<key column="examiner_id"></key>
+			<index column="idx"></index>
+			<one-to-many class="com.utilities.Exams"/>
+		</list>
+	  
+	  </subclass>
+	  
+	  
+	  
+	  
+	  
+	  <subclass name="com.utilities.Admin" discriminator-value="admin">
+	  
+	  </subclass>
+	  
+	  
+   </class>
+   
+   
+   
+   <class name="com.utilities.Exams" table="Exams">
+	  <id name="id" type="int" >
+	   <generator class="assigned"/>
+	  </id>
+	    <property name="examname" >
+	  <column name="examname"/>
+	  </property>
+	 <list name="students" cascade="all">
+			<key column="exam_id"></key>
+			<index column="idx"></index>
+			<many-to-many class="com.utilities.Student"/>
+		</list>
+		<one-to-one name="result" class="com.utilities.Results"></one-to-one>
+		<many-to-one name="examiner" class="com.utilities.Examiner"></many-to-one>
+		
+   </class>
+   
+   
+   <class name="com.utilities.Results" table="Results">
+   <id name="id" type="int" >
+	   <generator class="assigned"/>
+	</id>
+   	
+   	<property name="marks"  type="int">
+	  <column name="marks"/>
+	  </property>
+	  <property name="status" >
+	  <column name="status"/>
+	  </property>
+	  <one-to-one name="exam" class="com.utilities.Exams"></one-to-one>
+	  <one-to-one name="student" class="com.utilities.Student"></one-to-one>
+   
+   </class>
+   
+</hibernate-mapping>
