@@ -68,7 +68,7 @@
    
    
    
-   <class name="com.utilities.Exams" table="Exams">
+   <class name="com.utilities.Exams" table="exams">
 	  <id name="id" type="int" >
 	   <generator class="assigned"/>
 	  </id>
@@ -86,7 +86,7 @@
    </class>
    
    
-   <class name="com.utilities.Results" table="Results">
+   <class name="com.utilities.Results" table="results">
    <id name="id" type="int" >
 	   <generator class="assigned"/>
 	</id>
